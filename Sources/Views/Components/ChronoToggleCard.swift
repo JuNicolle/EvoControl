@@ -5,10 +5,10 @@ import SwiftUI
 /// the presets only apply once "Appliquer" is tapped, like `TemperatureCard`.
 struct ChronoToggleCard: View {
     @Binding var chronoOn: Bool
-    @Binding var economyPreset: Int
-    @Binding var comfortPreset: Int
-    let appliedEconomyPreset: Int
-    let appliedComfortPreset: Int
+    @Binding var economyPreset: Double
+    @Binding var comfortPreset: Double
+    let appliedEconomyPreset: Double
+    let appliedComfortPreset: Double
     let isBusy: Bool
     let onToggleChrono: (Bool) -> Void
     let onApplyPresets: () -> Void
@@ -51,13 +51,13 @@ struct ChronoToggleCard: View {
         .animation(.snappy, value: isDirty)
     }
 
-    private func presetStepper(title: String, systemImage: String, value: Binding<Int>) -> some View {
-        Stepper(value: value, in: 5...35) {
+    private func presetStepper(title: String, systemImage: String, value: Binding<Double>) -> some View {
+        Stepper(value: value, in: 5...35, step: 0.5) {
             HStack {
                 Label(title, systemImage: systemImage)
                     .font(.subheadline)
                 Spacer()
-                Text("\(value.wrappedValue)°C")
+                Text("\(value.wrappedValue.formatted(.number.precision(.fractionLength(1))))°C")
                     .font(.subheadline.weight(.semibold))
                     .contentTransition(.numericText())
                     .animation(.snappy, value: value.wrappedValue)

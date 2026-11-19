@@ -193,8 +193,8 @@ final class StoveBLEManager: NSObject {
             fan3Speed: fan3,
             pelletReserve: warnings.count >= 2 && (warnings[1] >> 2) & 1 != 0,
             isChronoOn: chronoOnOff & 0x0001 != 0,
-            chronoEconomyPreset: Int(chronoEconomy),
-            chronoComfortPreset: Int(chronoComfort),
+            chronoEconomyPreset: Double(chronoEconomy) / 10,
+            chronoComfortPreset: Double(chronoComfort) / 10,
             operatingState: operatingState,
             alarmCode: UInt8(alarm >> 8)
         )
@@ -270,17 +270,13 @@ final class StoveBLEManager: NSObject {
         try await send(EdilkaminRegisters.writeChronoOnOff(preservingOtherBitsAs: current, on: on))
     }
 
-    /// Sets the Chrono "Économie" preset temperature — see
-    /// `EdilkaminRegisters.writeChronoEconomyPreset` for the unverified encoding
-    /// assumption.
-    func setChronoEconomyPreset(celsius: Int) async throws {
+    /// Sets the Chrono "Économie" preset temperature.
+    func setChronoEconomyPreset(celsius: Double) async throws {
         try await send(EdilkaminRegisters.writeChronoEconomyPreset(celsius: celsius))
     }
 
-    /// Sets the Chrono "Confort" preset temperature — see
-    /// `EdilkaminRegisters.writeChronoComfortPreset` for the unverified encoding
-    /// assumption.
-    func setChronoComfortPreset(celsius: Int) async throws {
+    /// Sets the Chrono "Confort" preset temperature.
+    func setChronoComfortPreset(celsius: Double) async throws {
         try await send(EdilkaminRegisters.writeChronoComfortPreset(celsius: celsius))
     }
 
