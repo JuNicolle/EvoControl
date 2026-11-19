@@ -29,6 +29,7 @@ struct StoveView: View {
     @State private var hasAlarm = false
     @State private var error: String?
     @State private var isBusy = false
+    @State private var showSchedule = false
     /// Simulator-only: lets the dashboard be reviewed visually without real BLE
     /// hardware, since the iOS Simulator has no Bluetooth radio.
     @State private var demoMode = false
@@ -60,6 +61,9 @@ struct StoveView: View {
                 }
             }
             .preferredColorScheme(.dark)
+            .sheet(isPresented: $showSchedule) {
+                ChronoScheduleView(ble: ble, isDemoMode: demoMode)
+            }
         }
     }
 
@@ -127,7 +131,8 @@ struct StoveView: View {
                             try await ble.setChronoComfortPreset(celsius: chronoComfortPreset)
                             try await refresh()
                         }
-                    }
+                    },
+                    onOpenSchedule: { showSchedule = true }
                 )
 
                 TemperatureCard(target: $target, appliedTarget: appliedTarget, isBusy: isBusy) {

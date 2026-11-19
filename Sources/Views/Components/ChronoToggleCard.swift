@@ -12,6 +12,7 @@ struct ChronoToggleCard: View {
     let isBusy: Bool
     let onToggleChrono: (Bool) -> Void
     let onApplyPresets: () -> Void
+    let onOpenSchedule: () -> Void
 
     private var isDirty: Bool {
         economyPreset != appliedEconomyPreset || comfortPreset != appliedComfortPreset
@@ -34,6 +35,16 @@ struct ChronoToggleCard: View {
 
             presetStepper(title: "Économie", systemImage: "leaf.fill", value: $economyPreset)
             presetStepper(title: "Confort", systemImage: "sofa.fill", value: $comfortPreset)
+
+            Button(action: onOpenSchedule) {
+                Label("Programmation horaire", systemImage: "calendar")
+                    .font(.footnote.weight(.semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+            }
+            .buttonStyle(.bordered)
+            .tint(Theme.ember)
+            .disabled(isBusy)
 
             if isDirty {
                 Button(action: onApplyPresets) {

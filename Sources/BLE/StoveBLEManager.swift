@@ -284,6 +284,23 @@ final class StoveBLEManager: NSObject {
         try await send(EdilkaminRegisters.writeChronoComfortPreset(celsius: celsius))
     }
 
+    /// Reads the full Chrono weekly schedule grid — see
+    /// `EdilkaminRegisters.chronoScheduleRegister` for the unconfirmed choice between
+    /// the two stored programs, and `ChronoSchedule.decoded(fromPayload:)` for the
+    /// (unverified) byte layout.
+    func readChronoSchedule() async throws -> ChronoSchedule {
+        let data = try await readDataBytes(EdilkaminRegisters.readChronoSchedule)
+        guard data.count == ChronoSchedule.payloadByteCount else { throw StoveBLEError.unexpectedResponse }
+        return ChronoSchedule.decoded(fromPayload: data)
+    }
+
+    /// Writes the full Chrono weekly schedule grid — see `readChronoSchedule` for the
+    /// program A/B caveat, and `ChronoSchedule.encoded()` for the (unverified) byte
+    /// layout.
+    func setChronoSchedule(_ schedule: ChronoSchedule) async throws {
+        try await send(EdilkaminRegisters.writeChronoSchedule(payload: schedule.encoded()))
+    }
+
     /// Acknowledges the current alarm, following the documented preconditions: the stove
     /// must actually be reporting an alarm (operating state 7), and must be off — it
     /// otherwise rejects the reset while the power bit is set.
