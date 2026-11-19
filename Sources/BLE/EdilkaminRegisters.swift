@@ -54,6 +54,15 @@ enum EdilkaminRegisters {
     /// confirmed distinct from 0x052A. Manual power/fan commands are documented as
     /// blocked while this is active.
     static let readRelaxMode = read(0x052B)
+    /// Chrono (weekly schedule) on/off, bit 0 — by analogy with `readOnOffRegister`.
+    /// The rest of the register is understood to select which of the two stored
+    /// programs (0x04CE/0x04F8) is active; this task only reads/preserves it, it
+    /// doesn't interpret or change it. Unverified on a real stove.
+    static let readChronoOnOff = read(0x0522)
+    /// Chrono "Économie" preset temperature.
+    static let readChronoEconomyPreset = read(0x04CC)
+    /// Chrono "Confort" preset temperature.
+    static let readChronoComfortPreset = read(0x04CD)
 
     enum FanConfiguration {
         case none, fan1Only, fan1And2, fan1And2And3, fan2And3Only, unknown
@@ -142,6 +151,29 @@ enum EdilkaminRegisters {
     /// to reject this while bit 0 (power) is set — turn the stove off first.
     static func writeAlarmReset(preservingOtherBitsAs currentValue: UInt16) -> Command {
         write(0x031C, value: currentValue | 0x0002)
+    }
+
+    /// Switches the Chrono (weekly schedule) feature on or off: read-modify-write like
+    /// `writeOnOffRegister`/`writeAlarmReset`, flipping only bit 0 and preserving every
+    /// other bit (the active-program selection — see `readChronoOnOff`) as read.
+    static func writeChronoOnOff(preservingOtherBitsAs currentValue: UInt16, on: Bool) -> Command {
+        let newValue = on ? (currentValue | 0x0001) : (currentValue & ~0x0001)
+        return write(0x0522, value: newValue)
+    }
+
+    /// Chrono preset temperatures, range 5–35 °C. Encoding is assumed to be a whole
+    /// number of degrees written directly (e.g. 18 °C → 0x0012), unlike the manual
+    /// setpoint (`writeTargetTemperature`), which stores tenths of a degree: the
+    /// official app's decompiled source writes these two registers without the ×10
+    /// scaling used elsewhere. Not verified empirically on a real stove — read back
+    /// after writing and compare against the stove's own Chrono settings screen.
+    static func writeChronoEconomyPreset(celsius: Int) -> Command {
+        write(0x04CC, value: UInt16(clamping: max(5, min(35, celsius))))
+    }
+
+    /// See `writeChronoEconomyPreset` for the (unverified) encoding assumption.
+    static func writeChronoComfortPreset(celsius: Int) -> Command {
+        write(0x04CD, value: UInt16(clamping: max(5, min(35, celsius))))
     }
 
     // MARK: - Response parsing

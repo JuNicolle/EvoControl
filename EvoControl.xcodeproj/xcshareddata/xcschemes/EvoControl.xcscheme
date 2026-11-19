@@ -35,6 +35,20 @@
                ReferencedContainer = "container:EvoControl.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0246869F213D3FB1900FFA86"
+               BuildableName = "EvoControlTests.xctest"
+               BlueprintName = "EvoControlTests"
+               ReferencedContainer = "container:EvoControl.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -61,6 +75,17 @@
                BlueprintIdentifier = "AAC04863CDEACB2CB0A99567"
                BuildableName = "EvoControlScreenshots.xctest"
                BlueprintName = "EvoControlScreenshots"
+               ReferencedContainer = "container:EvoControl.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0246869F213D3FB1900FFA86"
+               BuildableName = "EvoControlTests.xctest"
+               BlueprintName = "EvoControlTests"
                ReferencedContainer = "container:EvoControl.xcodeproj">
             </BuildableReference>
          </TestableReference>
