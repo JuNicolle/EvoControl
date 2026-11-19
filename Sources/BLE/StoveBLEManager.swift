@@ -96,7 +96,7 @@ final class StoveBLEManager: NSObject {
         state = .disconnected
     }
 
-    /// Sends a 6-byte Modbus command and awaits the decrypted, CRC-checked response.
+    /// Sends a Modbus command and awaits the decrypted, CRC-checked response.
     /// Throws `.modbusException` if the stove understood but rejected the command.
     @discardableResult
     private func send(_ command: EdilkaminRegisters.Command) async throws -> [UInt8] {
@@ -109,7 +109,9 @@ final class StoveBLEManager: NSObject {
                 // The official app writes with WRITE_TYPE_NO_RESPONSE (Android), not
                 // "write with response" — the characteristic rejects the latter with
                 // ATT error "Write Not Permitted".
-                peripheral.writeValue(payload, for: writeChar, type: .withoutResponse)
+                Task { @MainActor in
+                    await self.writeFragmented(payload, to: writeChar, of: peripheral)
+                }
                 Task { @MainActor in
                     try? await Task.sleep(for: .seconds(10))
                     guard let pending = self.pendingContinuation else { return }
@@ -134,6 +136,53 @@ final class StoveBLEManager: NSObject {
     private func logExchange(_ entry: String) {
         exchangeLog.insert(entry, at: 0)
         if exchangeLog.count > Self.exchangeLogLimit { exchangeLog.removeLast() }
+    }
+
+    /// Short pause between two fragments of the same write, so we don't flood the
+    /// BLE stack — this codebase's own mitigation, not confirmed against a real
+    /// stove (see `writeFragments(for:maxLength:)`).
+    private static let writeFragmentDelay: Duration = .milliseconds(20)
+
+    /// Writes `payload` to `characteristic`, splitting it into several
+    /// `writeValue(_:for:type:)` calls if it exceeds `peripheral`'s negotiated
+    /// write-without-response length — CoreBluetooth does not fragment oversized
+    /// "write without response" calls itself, unlike "write with response" (which
+    /// uses ATT prepare/execute write and isn't usable here, see `send`).
+    ///
+    /// Only the Chrono schedule write (~128 bytes once encrypted) is expected to
+    /// ever exceed the typical negotiated length (commonly 182+ bytes on modern iOS
+    /// devices, but as low as 20 on an unnegotiated link) — every other command in
+    /// this codebase fits in a single fragment. Whether the stove's firmware
+    /// actually reassembles several consecutive characteristic writes into one
+    /// Modbus frame is **not verified on a real stove** (flagged as a risk in
+    /// plan.md): if a multi-fragment write (e.g. the Chrono schedule) is silently
+    /// ignored by the stove, this is the first thing to suspect.
+    private func writeFragmented(
+        _ payload: Data, to characteristic: CBCharacteristic, of peripheral: CBPeripheral
+    ) async {
+        let maxLength = peripheral.maximumWriteValueLength(for: .withoutResponse)
+        let fragments = Self.writeFragments(for: payload, maxLength: maxLength)
+        for (index, fragment) in fragments.enumerated() {
+            peripheral.writeValue(fragment, for: characteristic, type: .withoutResponse)
+            if index < fragments.count - 1 {
+                try? await Task.sleep(for: Self.writeFragmentDelay)
+            }
+        }
+    }
+
+    /// Pure helper (no BLE dependency, directly unit-testable): splits `payload`
+    /// into chunks of at most `maxLength` bytes, preserving order. Returns a single
+    /// fragment (the whole payload) when it already fits, or `maxLength <= 0`.
+    nonisolated static func writeFragments(for payload: Data, maxLength: Int) -> [Data] {
+        guard maxLength > 0, payload.count > maxLength else { return [payload] }
+        var fragments: [Data] = []
+        var offset = payload.startIndex
+        while offset < payload.endIndex {
+            let end = payload.index(offset, offsetBy: maxLength, limitedBy: payload.endIndex) ?? payload.endIndex
+            fragments.append(Data(payload[offset..<end]))
+            offset = end
+        }
+        return fragments
     }
 
     private func readRegister(_ command: EdilkaminRegisters.Command) async throws -> UInt16 {
@@ -278,6 +327,23 @@ final class StoveBLEManager: NSObject {
     /// Sets the Chrono "Confort" preset temperature.
     func setChronoComfortPreset(celsius: Double) async throws {
         try await send(EdilkaminRegisters.writeChronoComfortPreset(celsius: celsius))
+    }
+
+    /// Reads the full Chrono weekly schedule grid — see
+    /// `EdilkaminRegisters.chronoScheduleRegister` for the unconfirmed choice between
+    /// the two stored programs, and `ChronoSchedule.decoded(fromPayload:)` for the
+    /// (unverified) byte layout.
+    func readChronoSchedule() async throws -> ChronoSchedule {
+        let data = try await readDataBytes(EdilkaminRegisters.readChronoSchedule)
+        guard data.count == ChronoSchedule.payloadByteCount else { throw StoveBLEError.unexpectedResponse }
+        return ChronoSchedule.decoded(fromPayload: data)
+    }
+
+    /// Writes the full Chrono weekly schedule grid — see `readChronoSchedule` for the
+    /// program A/B caveat, and `ChronoSchedule.encoded()` for the (unverified) byte
+    /// layout.
+    func setChronoSchedule(_ schedule: ChronoSchedule) async throws {
+        try await send(EdilkaminRegisters.writeChronoSchedule(payload: schedule.encoded()))
     }
 
     /// Acknowledges the current alarm, following the documented preconditions: the stove

@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		07117DB7C085DB9BFFB80646 /* ModeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60789C2A7D6575D4F08CC90 /* ModeCard.swift */; };
 		11330628A0A826B9A08C0EA0 /* ConnectionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9F1F34AAD1F1A97EFF800 /* ConnectionScreen.swift */; };
+		32358490FD582E56871D40D3 /* ChronoSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79E819EDE70640B1F70F09D /* ChronoSchedule.swift */; };
 		332FC182E8787F23CCC8F5F4 /* ChronoToggleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C99FD256226044E4F61710F /* ChronoToggleCard.swift */; };
 		3F01651B9D3DBD92F41C500D /* EvoControlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA1C02294F34DC8A3AC41B /* EvoControlApp.swift */; };
+		4EA7CF9471193D95C8979677 /* ChronoScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B243C1816C95BC9170C5116D /* ChronoScheduleTests.swift */; };
 		50BDEAB4647F89BA50992CE2 /* BarLevelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618CA14F8CEEDB99E2DC081 /* BarLevelCard.swift */; };
 		53CB37331B7EAA58F4A76875 /* ChronoRegistersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CACECBE1B7E08920A832A38 /* ChronoRegistersTests.swift */; };
 		5EA78210D0B5E8E3E5CC3786 /* DiagnosticCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83962F53CE476981270605A /* DiagnosticCard.swift */; };
@@ -18,6 +20,7 @@
 		6438B71DC323D7B507C484CF /* StoveBLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */; };
 		6E534B668B807E275F5711AC /* AlarmCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7669EC772AF954BEBEEDCF /* AlarmCard.swift */; };
 		789C8DF82788FE4EF552CFDC /* TemperatureCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36A319F87DBB225910E806 /* TemperatureCard.swift */; };
+		8E5552D4F4964718B8EC0F5D /* StoveBLEManagerWriteFragmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EC86B55635E683EA0B9B39 /* StoveBLEManagerWriteFragmentsTests.swift */; };
 		94F57DFA6A289D2128AF1BB3 /* EdilkaminRegisters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043991E00E86C2770BEAC843 /* EdilkaminRegisters.swift */; };
 		9F2420E8360051E8770B850A /* StoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639718F06C6AF687674F9CD1 /* StoveView.swift */; };
 		9FF717B5C1BD21EBA52CA279 /* EdilkaminFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */; };
@@ -26,7 +29,9 @@
 		CEFF48423906A4ADADC47ED8 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9173E84678CD8B0C1FDBDD8B /* ScreenshotTests.swift */; };
 		D1BA037B7F10F24FFACAFA41 /* PelletReserveCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E0B7E95BD28373834AC9BE /* PelletReserveCard.swift */; };
 		D339E72FB5D6987E5025A2FB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B5099D16D216943059AAD8 /* Theme.swift */; };
+		DFBF257971F6320957C54C0A /* EdilkaminFrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD18275443AC12B8E9E954B /* EdilkaminFrameTests.swift */; };
 		E4FEB2EE41F74364ECD95C54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851A81814BE2B59121516657 /* Assets.xcassets */; };
+		EDB88D0CA5B84070F2E40EC8 /* ChronoScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7343816C451DE63CF52D3 /* ChronoScheduleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,18 +60,23 @@
 		2CCE805025F94B8E484B2FD2 /* EvoControlScreenshots.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = EvoControlScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EB9F1F34AAD1F1A97EFF800 /* ConnectionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionScreen.swift; sourceTree = "<group>"; };
 		57E5F8EADD228EA732FDD8C2 /* RelaxModeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelaxModeCard.swift; sourceTree = "<group>"; };
+		59E7343816C451DE63CF52D3 /* ChronoScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronoScheduleView.swift; sourceTree = "<group>"; };
 		5D575968C9D9E392D55E2E9A /* StoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveState.swift; sourceTree = "<group>"; };
 		639718F06C6AF687674F9CD1 /* StoveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveView.swift; sourceTree = "<group>"; };
 		6618CA14F8CEEDB99E2DC081 /* BarLevelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarLevelCard.swift; sourceTree = "<group>"; };
 		6CACECBE1B7E08920A832A38 /* ChronoRegistersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronoRegistersTests.swift; sourceTree = "<group>"; };
 		7C99FD256226044E4F61710F /* ChronoToggleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronoToggleCard.swift; sourceTree = "<group>"; };
+		7DD18275443AC12B8E9E954B /* EdilkaminFrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdilkaminFrameTests.swift; sourceTree = "<group>"; };
 		851A81814BE2B59121516657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9173E84678CD8B0C1FDBDD8B /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
+		92EC86B55635E683EA0B9B39 /* StoveBLEManagerWriteFragmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveBLEManagerWriteFragmentsTests.swift; sourceTree = "<group>"; };
 		93AE591604E3640DCE69E198 /* EvoControlTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = EvoControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B5099D16D216943059AAD8 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		AB7669EC772AF954BEBEEDCF /* AlarmCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCard.swift; sourceTree = "<group>"; };
+		B243C1816C95BC9170C5116D /* ChronoScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronoScheduleTests.swift; sourceTree = "<group>"; };
 		B60789C2A7D6575D4F08CC90 /* ModeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeCard.swift; sourceTree = "<group>"; };
 		C2D0085DD37B71D2ED61E976 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
+		C79E819EDE70640B1F70F09D /* ChronoSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronoSchedule.swift; sourceTree = "<group>"; };
 		E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveBLEManager.swift; sourceTree = "<group>"; };
 		EB36A319F87DBB225910E806 /* TemperatureCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureCard.swift; sourceTree = "<group>"; };
 		EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdilkaminFrame.swift; sourceTree = "<group>"; };
@@ -78,6 +88,9 @@
 			isa = PBXGroup;
 			children = (
 				6CACECBE1B7E08920A832A38 /* ChronoRegistersTests.swift */,
+				B243C1816C95BC9170C5116D /* ChronoScheduleTests.swift */,
+				7DD18275443AC12B8E9E954B /* EdilkaminFrameTests.swift */,
+				92EC86B55635E683EA0B9B39 /* StoveBLEManagerWriteFragmentsTests.swift */,
 			);
 			path = EvoControlTests;
 			sourceTree = "<group>";
@@ -142,6 +155,7 @@
 		B0DE86AB8345A3ECBF2A3B00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				59E7343816C451DE63CF52D3 /* ChronoScheduleView.swift */,
 				639718F06C6AF687674F9CD1 /* StoveView.swift */,
 				A6B5099D16D216943059AAD8 /* Theme.swift */,
 				2331D9559DA40395454CD8AD /* Components */,
@@ -160,6 +174,7 @@
 		FF2248B3E1699B5022023F6C /* BLE */ = {
 			isa = PBXGroup;
 			children = (
+				C79E819EDE70640B1F70F09D /* ChronoSchedule.swift */,
 				EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */,
 				043991E00E86C2770BEAC843 /* EdilkaminRegisters.swift */,
 				E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */,
@@ -278,6 +293,8 @@
 			files = (
 				6E534B668B807E275F5711AC /* AlarmCard.swift in Sources */,
 				50BDEAB4647F89BA50992CE2 /* BarLevelCard.swift in Sources */,
+				32358490FD582E56871D40D3 /* ChronoSchedule.swift in Sources */,
+				EDB88D0CA5B84070F2E40EC8 /* ChronoScheduleView.swift in Sources */,
 				332FC182E8787F23CCC8F5F4 /* ChronoToggleCard.swift in Sources */,
 				11330628A0A826B9A08C0EA0 /* ConnectionScreen.swift in Sources */,
 				5EA78210D0B5E8E3E5CC3786 /* DiagnosticCard.swift in Sources */,
@@ -301,6 +318,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				53CB37331B7EAA58F4A76875 /* ChronoRegistersTests.swift in Sources */,
+				4EA7CF9471193D95C8979677 /* ChronoScheduleTests.swift in Sources */,
+				DFBF257971F6320957C54C0A /* EdilkaminFrameTests.swift in Sources */,
+				8E5552D4F4964718B8EC0F5D /* StoveBLEManagerWriteFragmentsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

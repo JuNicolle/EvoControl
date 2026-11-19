@@ -73,4 +73,28 @@ final class ChronoRegistersTests: XCTestCase {
         let command = EdilkaminRegisters.writeChronoComfortPreset(celsius: 50)
         XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x01, 0x5E])  // 35.0 °C -> 350
     }
+
+    func testReadChronoScheduleTargetsRegister0x04CEFor42Registers() {
+        XCTAssertEqual(
+            EdilkaminRegisters.readChronoSchedule.bytes,
+            [1, 3, 0x04, 0xCE, 0x00, 42]
+        )
+    }
+
+    func testWriteChronoScheduleUsesFunction0x10WithRegisterCountAndByteCount() {
+        let payload = [UInt8](repeating: 0, count: 84)
+        let command = EdilkaminRegisters.writeChronoSchedule(payload: payload)
+        XCTAssertEqual(
+            Array(command.bytes.prefix(7)),
+            [1, 0x10, 0x04, 0xCE, 0x00, 42, 84]
+        )
+        XCTAssertEqual(command.bytes.count, 7 + 84)
+        XCTAssertEqual(Array(command.bytes.suffix(84)), payload)
+    }
+
+    func testWriteChronoScheduleCarriesThePayloadBytesVerbatim() {
+        let payload = (0..<84).map { UInt8($0 % 256) }
+        let command = EdilkaminRegisters.writeChronoSchedule(payload: payload)
+        XCTAssertEqual(Array(command.bytes.suffix(84)), payload)
+    }
 }

@@ -8,15 +8,32 @@ import Foundation
 /// encoding* of some write commands is flagged "uncertain" where noted — verify
 /// empirically: set, then re-read the register and compare, before trusting it blindly.
 enum EdilkaminRegisters {
-    /// A 6-byte Modbus-RTU command, CRC appended later by `EdilkaminFrame`.
+    /// A Modbus-RTU command, CRC appended later by `EdilkaminFrame`.
     struct Command {
         let bytes: [UInt8]
+
+        /// Functions 3 (read holding registers) and 6 (write single register): a fixed
+        /// 6-byte command.
         init(function: UInt8, register: UInt16, valueOrCount: UInt16, address: UInt8 = 1) {
             bytes = [
                 address, function,
                 UInt8(register >> 8), UInt8(register & 0xFF),
                 UInt8(valueOrCount >> 8), UInt8(valueOrCount & 0xFF),
             ]
+        }
+
+        /// Function 0x10 (write multiple registers): address, function, register,
+        /// register count, byte count, then the payload itself — `payload.count` must
+        /// be even (one register is 2 bytes).
+        init(writingMultipleRegisters register: UInt16, payload: [UInt8], address: UInt8 = 1) {
+            precondition(payload.count % 2 == 0, "payload must hold whole 16-bit registers")
+            let registerCount = UInt16(payload.count / 2)
+            bytes = [
+                address, 0x10,
+                UInt8(register >> 8), UInt8(register & 0xFF),
+                UInt8(registerCount >> 8), UInt8(registerCount & 0xFF),
+                UInt8(payload.count),
+            ] + payload
         }
     }
 
@@ -63,6 +80,18 @@ enum EdilkaminRegisters {
     static let readChronoEconomyPreset = read(0x04CC)
     /// Chrono "Confort" preset temperature.
     static let readChronoComfortPreset = read(0x04CD)
+    /// Chrono weekly schedule grid, program A — 42 registers (84 bytes), see
+    /// `ChronoSchedule`. The decompiled app picks between this register and program B
+    /// (`chronoScheduleProgramBRegister`, `0x04F8`) based on a boolean ("isAuto") whose
+    /// exact meaning isn't confirmed (two independent programs? auto-temperature vs.
+    /// auto-power?) — see plan.md. This codebase always reads/writes program A as the
+    /// active one, unverified against a real stove.
+    static let chronoScheduleRegister: UInt16 = 0x04CE
+    /// The other stored program slot — not read or written by this codebase, kept
+    /// here for reference (see `chronoScheduleRegister`'s doc comment).
+    static let chronoScheduleProgramBRegister: UInt16 = 0x04F8
+    static let chronoScheduleRegisterCount: UInt16 = 42
+    static let readChronoSchedule = read(chronoScheduleRegister, count: chronoScheduleRegisterCount)
 
     enum FanConfiguration {
         case none, fan1Only, fan1And2, fan1And2And3, fan2And3Only, unknown
@@ -177,6 +206,14 @@ enum EdilkaminRegisters {
     static func writeChronoComfortPreset(celsius: Double) -> Command {
         let clamped = min(max(celsius, 5), 35)
         return write(0x04CD, value: UInt16((clamped * 10).rounded()))
+    }
+
+    /// Writes the full Chrono weekly schedule grid (program A, see
+    /// `chronoScheduleRegister`) with function 0x10, as produced by
+    /// `ChronoSchedule.encoded()`. `payload` must be exactly
+    /// `ChronoSchedule.payloadByteCount` (84) bytes.
+    static func writeChronoSchedule(payload: [UInt8]) -> Command {
+        Command(writingMultipleRegisters: chronoScheduleRegister, payload: payload)
     }
 
     // MARK: - Response parsing
