@@ -20,10 +20,10 @@ struct StoveView: View {
     @State private var automaticMode = false
     @State private var relaxMode = false
     @State private var chronoOn = false
-    @State private var appliedChronoEconomyPreset = 16
-    @State private var chronoEconomyPreset = 16
-    @State private var appliedChronoComfortPreset = 20
-    @State private var chronoComfortPreset = 20
+    @State private var appliedChronoEconomyPreset: Double = 16
+    @State private var chronoEconomyPreset: Double = 16
+    @State private var appliedChronoComfortPreset: Double = 20
+    @State private var chronoComfortPreset: Double = 20
     @State private var pelletReserve = false
     @State private var alarmCode: UInt8 = 0
     @State private var hasAlarm = false
