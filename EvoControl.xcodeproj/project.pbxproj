@@ -20,6 +20,7 @@
 		6438B71DC323D7B507C484CF /* StoveBLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */; };
 		6E534B668B807E275F5711AC /* AlarmCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7669EC772AF954BEBEEDCF /* AlarmCard.swift */; };
 		789C8DF82788FE4EF552CFDC /* TemperatureCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36A319F87DBB225910E806 /* TemperatureCard.swift */; };
+		8E5552D4F4964718B8EC0F5D /* StoveBLEManagerWriteFragmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EC86B55635E683EA0B9B39 /* StoveBLEManagerWriteFragmentsTests.swift */; };
 		94F57DFA6A289D2128AF1BB3 /* EdilkaminRegisters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043991E00E86C2770BEAC843 /* EdilkaminRegisters.swift */; };
 		9F2420E8360051E8770B850A /* StoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639718F06C6AF687674F9CD1 /* StoveView.swift */; };
 		9FF717B5C1BD21EBA52CA279 /* EdilkaminFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */; };
@@ -68,6 +69,7 @@
 		7DD18275443AC12B8E9E954B /* EdilkaminFrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdilkaminFrameTests.swift; sourceTree = "<group>"; };
 		851A81814BE2B59121516657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9173E84678CD8B0C1FDBDD8B /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
+		92EC86B55635E683EA0B9B39 /* StoveBLEManagerWriteFragmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveBLEManagerWriteFragmentsTests.swift; sourceTree = "<group>"; };
 		93AE591604E3640DCE69E198 /* EvoControlTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = EvoControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B5099D16D216943059AAD8 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		AB7669EC772AF954BEBEEDCF /* AlarmCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCard.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				6CACECBE1B7E08920A832A38 /* ChronoRegistersTests.swift */,
 				B243C1816C95BC9170C5116D /* ChronoScheduleTests.swift */,
 				7DD18275443AC12B8E9E954B /* EdilkaminFrameTests.swift */,
+				92EC86B55635E683EA0B9B39 /* StoveBLEManagerWriteFragmentsTests.swift */,
 			);
 			path = EvoControlTests;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				53CB37331B7EAA58F4A76875 /* ChronoRegistersTests.swift in Sources */,
 				4EA7CF9471193D95C8979677 /* ChronoScheduleTests.swift in Sources */,
 				DFBF257971F6320957C54C0A /* EdilkaminFrameTests.swift in Sources */,
+				8E5552D4F4964718B8EC0F5D /* StoveBLEManagerWriteFragmentsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
