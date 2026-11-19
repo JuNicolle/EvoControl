@@ -1,0 +1,324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3F01651B9D3DBD92F41C500D /* EvoControlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA1C02294F34DC8A3AC41B /* EvoControlApp.swift */; };
+		6438B71DC323D7B507C484CF /* StoveBLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */; };
+		94F57DFA6A289D2128AF1BB3 /* EdilkaminRegisters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043991E00E86C2770BEAC843 /* EdilkaminRegisters.swift */; };
+		9F2420E8360051E8770B850A /* StoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639718F06C6AF687674F9CD1 /* StoveView.swift */; };
+		9FF717B5C1BD21EBA52CA279 /* EdilkaminFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03BA1C02294F34DC8A3AC41B /* EvoControlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvoControlApp.swift; sourceTree = "<group>"; };
+		043991E00E86C2770BEAC843 /* EdilkaminRegisters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdilkaminRegisters.swift; sourceTree = "<group>"; };
+		24E242C6C7D46150DBECE83F /* EvoControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvoControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		639718F06C6AF687674F9CD1 /* StoveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveView.swift; sourceTree = "<group>"; };
+		E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveBLEManager.swift; sourceTree = "<group>"; };
+		EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdilkaminFrame.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		26365148F039424D7DA03A35 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				03BA1C02294F34DC8A3AC41B /* EvoControlApp.swift */,
+				FF2248B3E1699B5022023F6C /* BLE */,
+				B0DE86AB8345A3ECBF2A3B00 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		6A3AFF50F75F4F988C5C658F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				24E242C6C7D46150DBECE83F /* EvoControl.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7157949388890FFB5DBB22CF = {
+			isa = PBXGroup;
+			children = (
+				26365148F039424D7DA03A35 /* Sources */,
+				6A3AFF50F75F4F988C5C658F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B0DE86AB8345A3ECBF2A3B00 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				639718F06C6AF687674F9CD1 /* StoveView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF2248B3E1699B5022023F6C /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */,
+				043991E00E86C2770BEAC843 /* EdilkaminRegisters.swift */,
+				E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */,
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA95E7C07DBC5AAF36892A0B /* EvoControl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 900207ADB47AC2F7CB91151C /* Build configuration list for PBXNativeTarget "EvoControl" */;
+			buildPhases = (
+				42BC18A3D2A808641806B64E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EvoControl;
+			packageProductDependencies = (
+			);
+			productName = EvoControl;
+			productReference = 24E242C6C7D46150DBECE83F /* EvoControl.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5311F31A1D410177C82603A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = ADC1F78764480D62EFA8943C /* Build configuration list for PBXProject "EvoControl" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 7157949388890FFB5DBB22CF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6A3AFF50F75F4F988C5C658F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA95E7C07DBC5AAF36892A0B /* EvoControl */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		42BC18A3D2A808641806B64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FF717B5C1BD21EBA52CA279 /* EdilkaminFrame.swift in Sources */,
+				94F57DFA6A289D2128AF1BB3 /* EdilkaminRegisters.swift in Sources */,
+				3F01651B9D3DBD92F41C500D /* EvoControlApp.swift in Sources */,
+				6438B71DC323D7B507C484CF /* StoveBLEManager.swift in Sources */,
+				9F2420E8360051E8770B850A /* StoveView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		27FBD35E9B76F7E1CAB351DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3S8388G2W6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Poêle";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Nécessaire pour se connecter au poêle en Bluetooth.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.perso.EvoControl;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		54ED62D98ABF88B91577851F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		6F0844F9176CBE6A32E9BEE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		ABD15FB2D36A3958CBD76BF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3S8388G2W6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Poêle";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Nécessaire pour se connecter au poêle en Bluetooth.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.perso.EvoControl;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		900207ADB47AC2F7CB91151C /* Build configuration list for PBXNativeTarget "EvoControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27FBD35E9B76F7E1CAB351DD /* Debug */,
+				ABD15FB2D36A3958CBD76BF1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ADC1F78764480D62EFA8943C /* Build configuration list for PBXProject "EvoControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F0844F9176CBE6A32E9BEE1 /* Debug */,
+				54ED62D98ABF88B91577851F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A5311F31A1D410177C82603A /* Project object */;
+}

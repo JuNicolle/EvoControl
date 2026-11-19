@@ -1,0 +1,12 @@
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+.build/
+
+# xcodegen regenerates this from project.yml — keep the project but drop per-user cruft
+EvoControl.xcodeproj/xcuserdata/
+EvoControl.xcodeproj/project.xcworkspace/xcuserdata/
+EvoControl.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+.DS_Store
