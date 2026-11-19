@@ -1,0 +1,6 @@
+// Copy to Config/Local.xcconfig (gitignored) and fill in your own value.
+// Not committed: avoids leaking a personal Apple Developer Team ID into a
+// public repo. The app builds fine without this file — you just won't be
+// able to install it on a physical device until you set it (the Simulator
+// doesn't need signing).
+DEVELOPMENT_TEAM =

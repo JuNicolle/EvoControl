@@ -3,6 +3,9 @@ options:
   bundleIdPrefix: com.perso
   deploymentTarget:
     iOS: "17.0"
+configFiles:
+  Debug: Config/Shared.xcconfig
+  Release: Config/Shared.xcconfig
 targets:
   EvoControl:
     type: application

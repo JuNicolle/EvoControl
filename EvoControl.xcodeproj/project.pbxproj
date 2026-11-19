@@ -66,6 +66,7 @@
 		A6B5099D16D216943059AAD8 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		AB7669EC772AF954BEBEEDCF /* AlarmCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCard.swift; sourceTree = "<group>"; };
 		B60789C2A7D6575D4F08CC90 /* ModeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeCard.swift; sourceTree = "<group>"; };
+		C2D0085DD37B71D2ED61E976 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		E4EA890A194BA5EAB4BC5823 /* StoveBLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoveBLEManager.swift; sourceTree = "<group>"; };
 		EB36A319F87DBB225910E806 /* TemperatureCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureCard.swift; sourceTree = "<group>"; };
 		EE2BD0C08957382A2E8139D5 /* EdilkaminFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdilkaminFrame.swift; sourceTree = "<group>"; };
@@ -122,11 +123,20 @@
 		7157949388890FFB5DBB22CF = {
 			isa = PBXGroup;
 			children = (
+				730D5C5CC36C009CDA4DA859 /* Config */,
 				1F13E730FD09611F9BC20D21 /* EvoControlTests */,
 				B26A2CDC2C3B823FFEA2B4F1 /* ScreenshotTests */,
 				26365148F039424D7DA03A35 /* Sources */,
 				6A3AFF50F75F4F988C5C658F /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		730D5C5CC36C009CDA4DA859 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C2D0085DD37B71D2ED61E976 /* Shared.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		B0DE86AB8345A3ECBF2A3B00 /* Views */ = {
@@ -378,6 +388,7 @@
 		};
 		54ED62D98ABF88B91577851F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2D0085DD37B71D2ED61E976 /* Shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -434,6 +445,7 @@
 		};
 		6F0844F9176CBE6A32E9BEE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2D0085DD37B71D2ED61E976 /* Shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

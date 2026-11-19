@@ -9,4 +9,7 @@ EvoControl.xcodeproj/xcuserdata/
 EvoControl.xcodeproj/project.xcworkspace/xcuserdata/
 EvoControl.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 
+# Personal signing config — never commit a Developer Team ID
+Config/Local.xcconfig
+
 .DS_Store

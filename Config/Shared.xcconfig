@@ -1,0 +1,4 @@
+// Included by project.yml for every configuration. Pulls in Local.xcconfig
+// when it exists (gitignored, per-developer) without failing the build when
+// it doesn't — a fresh clone still builds for the Simulator.
+#include? "Local.xcconfig"
