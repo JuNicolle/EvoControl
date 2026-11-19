@@ -9,7 +9,7 @@ personnelles).
 
 Pas de clé Jira (projet personnel). Branches : `feature/chrono-<description>`.
 
-## Tâche 1 — Chrono on/off + présets Économie/Confort
+## Tâche 1 — Chrono on/off + présets Économie/Confort ✅ (PR #1, revue sans point bloquant)
 
 - **Repo** : EvoControl
 - **Agent** : `ios-developer`
