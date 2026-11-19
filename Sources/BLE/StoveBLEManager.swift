@@ -161,6 +161,9 @@ final class StoveBLEManager: NSObject {
         let power = try await readRegister(EdilkaminRegisters.readPowerLevel)
         let automatic = try await readRegister(EdilkaminRegisters.readAutomaticMode)
         let relax = try await readRegister(EdilkaminRegisters.readRelaxMode)
+        let chronoOnOff = try await readRegister(EdilkaminRegisters.readChronoOnOff)
+        let chronoEconomy = try await readRegister(EdilkaminRegisters.readChronoEconomyPreset)
+        let chronoComfort = try await readRegister(EdilkaminRegisters.readChronoComfortPreset)
         let operatingState = try await readRegister(EdilkaminRegisters.readOperatingState)
         let alarm = try await readRegister(EdilkaminRegisters.readAlarmCode)
         let warnings = try await readDataBytes(EdilkaminRegisters.readWarningFlags)
@@ -189,6 +192,9 @@ final class StoveBLEManager: NSObject {
             fan2Speed: fan2,
             fan3Speed: fan3,
             pelletReserve: warnings.count >= 2 && (warnings[1] >> 2) & 1 != 0,
+            isChronoOn: chronoOnOff & 0x0001 != 0,
+            chronoEconomyPreset: Int(chronoEconomy),
+            chronoComfortPreset: Int(chronoComfort),
             operatingState: operatingState,
             alarmCode: UInt8(alarm >> 8)
         )
@@ -256,6 +262,26 @@ final class StoveBLEManager: NSObject {
     /// while active (see `requireManualMode`).
     func setRelaxMode(on: Bool) async throws {
         try await send(EdilkaminRegisters.writeRelaxMode(on: on))
+    }
+
+    /// Switches the Chrono (weekly schedule) feature on or off.
+    func setChronoOn(_ on: Bool) async throws {
+        let current = try await readRegister(EdilkaminRegisters.readChronoOnOff)
+        try await send(EdilkaminRegisters.writeChronoOnOff(preservingOtherBitsAs: current, on: on))
+    }
+
+    /// Sets the Chrono "Économie" preset temperature — see
+    /// `EdilkaminRegisters.writeChronoEconomyPreset` for the unverified encoding
+    /// assumption.
+    func setChronoEconomyPreset(celsius: Int) async throws {
+        try await send(EdilkaminRegisters.writeChronoEconomyPreset(celsius: celsius))
+    }
+
+    /// Sets the Chrono "Confort" preset temperature — see
+    /// `EdilkaminRegisters.writeChronoComfortPreset` for the unverified encoding
+    /// assumption.
+    func setChronoComfortPreset(celsius: Int) async throws {
+        try await send(EdilkaminRegisters.writeChronoComfortPreset(celsius: celsius))
     }
 
     /// Acknowledges the current alarm, following the documented preconditions: the stove

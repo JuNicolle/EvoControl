@@ -12,6 +12,12 @@ struct StoveState {
     var fan2Speed: Int?  // nil when this stove doesn't have a Fan 2
     var fan3Speed: Int?  // nil when this stove doesn't have a Fan 3
     var pelletReserve: Bool
+    var isChronoOn: Bool
+    /// Chrono "Économie"/"Confort" preset temperatures — see
+    /// `EdilkaminRegisters.writeChronoEconomyPreset` for the unverified encoding
+    /// assumption (whole degrees, not tenths).
+    var chronoEconomyPreset: Int
+    var chronoComfortPreset: Int
     /// Operating/status code (7 = alarm) and the alarm code itself (0 = none).
     var operatingState: UInt16
     var alarmCode: UInt8

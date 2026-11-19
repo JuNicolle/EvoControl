@@ -31,12 +31,25 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: EvoControl
+  EvoControlTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - EvoControlTests
+    settings:
+      base:
+        SWIFT_VERSION: "6.0"
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: EvoControl
 schemes:
   EvoControl:
     build:
       targets:
         EvoControl: all
         EvoControlScreenshots: [test]
+        EvoControlTests: [test]
     test:
       targets:
         - EvoControlScreenshots
+        - EvoControlTests

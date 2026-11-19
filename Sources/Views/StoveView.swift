@@ -19,6 +19,11 @@ struct StoveView: View {
     @State private var fan3 = 1
     @State private var automaticMode = false
     @State private var relaxMode = false
+    @State private var chronoOn = false
+    @State private var appliedChronoEconomyPreset = 16
+    @State private var chronoEconomyPreset = 16
+    @State private var appliedChronoComfortPreset = 20
+    @State private var chronoComfortPreset = 20
     @State private var pelletReserve = false
     @State private var alarmCode: UInt8 = 0
     @State private var hasAlarm = false
@@ -99,6 +104,31 @@ struct StoveView: View {
                     if demoMode { return }
                     run { try await ble.setRelaxMode(on: newValue); try await refresh() }
                 }
+
+                ChronoToggleCard(
+                    chronoOn: $chronoOn,
+                    economyPreset: $chronoEconomyPreset,
+                    comfortPreset: $chronoComfortPreset,
+                    appliedEconomyPreset: appliedChronoEconomyPreset,
+                    appliedComfortPreset: appliedChronoComfortPreset,
+                    isBusy: isBusy,
+                    onToggleChrono: { newValue in
+                        if demoMode { return }
+                        run { try await ble.setChronoOn(newValue); try await refresh() }
+                    },
+                    onApplyPresets: {
+                        if demoMode {
+                            appliedChronoEconomyPreset = chronoEconomyPreset
+                            appliedChronoComfortPreset = chronoComfortPreset
+                            return
+                        }
+                        run {
+                            try await ble.setChronoEconomyPreset(celsius: chronoEconomyPreset)
+                            try await ble.setChronoComfortPreset(celsius: chronoComfortPreset)
+                            try await refresh()
+                        }
+                    }
+                )
 
                 TemperatureCard(target: $target, appliedTarget: appliedTarget, isBusy: isBusy) {
                     if demoMode { appliedTarget = target; return }
@@ -213,6 +243,11 @@ struct StoveView: View {
         hasFan3 = false
         automaticMode = false
         relaxMode = false
+        chronoOn = false
+        appliedChronoEconomyPreset = 16
+        chronoEconomyPreset = 16
+        appliedChronoComfortPreset = 20
+        chronoComfortPreset = 20
         pelletReserve = false
         hasAlarm = false
         alarmCode = 0
@@ -245,6 +280,11 @@ struct StoveView: View {
         }
         automaticMode = state.automaticMode
         relaxMode = state.relaxMode
+        chronoOn = state.isChronoOn
+        appliedChronoEconomyPreset = max(5, min(35, state.chronoEconomyPreset))
+        chronoEconomyPreset = appliedChronoEconomyPreset
+        appliedChronoComfortPreset = max(5, min(35, state.chronoComfortPreset))
+        chronoComfortPreset = appliedChronoComfortPreset
         pelletReserve = state.pelletReserve
         hasAlarm = state.hasAlarm
         alarmCode = state.alarmCode
