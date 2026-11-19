@@ -161,19 +161,22 @@ enum EdilkaminRegisters {
         return write(0x0522, value: newValue)
     }
 
-    /// Chrono preset temperatures, range 5–35 °C. Encoding is assumed to be a whole
-    /// number of degrees written directly (e.g. 18 °C → 0x0012), unlike the manual
-    /// setpoint (`writeTargetTemperature`), which stores tenths of a degree: the
-    /// official app's decompiled source writes these two registers without the ×10
-    /// scaling used elsewhere. Not verified empirically on a real stove — read back
-    /// after writing and compare against the stove's own Chrono settings screen.
-    static func writeChronoEconomyPreset(celsius: Int) -> Command {
-        write(0x04CC, value: UInt16(clamping: max(5, min(35, celsius))))
+    /// Chrono preset temperatures, 0.5 °C steps, range 5–35 °C: same tenths-of-a-degree
+    /// encoding as `writeTargetTemperature` (confirmed in the official app's decompiled
+    /// source — the screen that calls into the Chrono preset setters multiplies the
+    /// entered value by 10 before passing it in; an earlier reading of only the setter
+    /// itself missed that caller-side scaling and wrongly assumed whole degrees, which
+    /// silently failed on a real stove, just like an unscaled `writeTargetTemperature`
+    /// call would).
+    static func writeChronoEconomyPreset(celsius: Double) -> Command {
+        let clamped = min(max(celsius, 5), 35)
+        return write(0x04CC, value: UInt16((clamped * 10).rounded()))
     }
 
-    /// See `writeChronoEconomyPreset` for the (unverified) encoding assumption.
-    static func writeChronoComfortPreset(celsius: Int) -> Command {
-        write(0x04CD, value: UInt16(clamping: max(5, min(35, celsius))))
+    /// See `writeChronoEconomyPreset` for the encoding.
+    static func writeChronoComfortPreset(celsius: Double) -> Command {
+        let clamped = min(max(celsius, 5), 35)
+        return write(0x04CD, value: UInt16((clamped * 10).rounded()))
     }
 
     // MARK: - Response parsing

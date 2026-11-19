@@ -39,33 +39,38 @@ final class ChronoRegistersTests: XCTestCase {
         XCTAssertEqual(command.bytes, [1, 6, 0x05, 0x22, 0xFF, 0x01])
     }
 
-    func testWriteChronoEconomyPresetEncodesPlainValueWithinRange() {
+    func testWriteChronoEconomyPresetEncodesTenthsOfADegreeWithinRange() {
         let command = EdilkaminRegisters.writeChronoEconomyPreset(celsius: 16)
-        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x00, 16])
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x00, 0xA0])  // 16.0 °C -> 160
+    }
+
+    func testWriteChronoEconomyPresetEncodesHalfDegreeStep() {
+        let command = EdilkaminRegisters.writeChronoEconomyPreset(celsius: 18.5)
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x00, 0xB9])  // 18.5 °C -> 185
     }
 
     func testWriteChronoEconomyPresetClampsBelowRange() {
         let command = EdilkaminRegisters.writeChronoEconomyPreset(celsius: 0)
-        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x00, 5])
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x00, 0x32])  // 5.0 °C -> 50
     }
 
     func testWriteChronoEconomyPresetClampsAboveRange() {
         let command = EdilkaminRegisters.writeChronoEconomyPreset(celsius: 100)
-        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x00, 35])
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCC, 0x01, 0x5E])  // 35.0 °C -> 350
     }
 
-    func testWriteChronoComfortPresetEncodesPlainValueWithinRange() {
+    func testWriteChronoComfortPresetEncodesTenthsOfADegreeWithinRange() {
         let command = EdilkaminRegisters.writeChronoComfortPreset(celsius: 20)
-        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x00, 20])
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x00, 0xC8])  // 20.0 °C -> 200
     }
 
     func testWriteChronoComfortPresetClampsBelowRange() {
         let command = EdilkaminRegisters.writeChronoComfortPreset(celsius: -10)
-        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x00, 5])
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x00, 0x32])  // 5.0 °C -> 50
     }
 
     func testWriteChronoComfortPresetClampsAboveRange() {
         let command = EdilkaminRegisters.writeChronoComfortPreset(celsius: 50)
-        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x00, 35])
+        XCTAssertEqual(command.bytes, [1, 6, 0x04, 0xCD, 0x01, 0x5E])  // 35.0 °C -> 350
     }
 }
