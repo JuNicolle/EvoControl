@@ -14,7 +14,7 @@ struct ChronoToggleCard: View {
     let onApplyPresets: () -> Void
 
     private var isDirty: Bool {
-        economyPreset != appliedEconomyPreset || comfortPreset != appliedComfortPreset
+        abs(economyPreset - appliedEconomyPreset) >= 0.01 || abs(comfortPreset - appliedComfortPreset) >= 0.01
     }
 
     var body: some View {
