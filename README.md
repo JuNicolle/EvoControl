@@ -99,9 +99,13 @@ xcodegen generate
 open EvoControl.xcodeproj
 ```
 
-Pick your own signing team in Xcode to install on a physical iPhone — Bluetooth
-doesn't work in the Simulator, so that's required for anything beyond looking at the
-UI. On first launch, grant the Bluetooth permission, stay near the stove, and tap
+To install on a physical iPhone — Bluetooth doesn't work in the Simulator, so that's
+required for anything beyond looking at the UI — copy
+`Config/Local.xcconfig.example` to `Config/Local.xcconfig` (gitignored) and set your
+own `DEVELOPMENT_TEAM`, then `xcodegen generate`. Picking a team from Xcode's Signing
+& Capabilities panel instead works too, but it may write the team ID straight into
+the committed `.xcodeproj` — run `git status` afterwards and avoid committing that if
+so. On first launch, grant the Bluetooth permission, stay near the stove, and tap
 "Se connecter au poêle".
 
 ## Disclaimer
