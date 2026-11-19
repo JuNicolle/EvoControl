@@ -144,21 +144,53 @@ final class StoveBLEManager: NSObject {
         return value
     }
 
+    private func readDataBytes(_ command: EdilkaminRegisters.Command) async throws -> [UInt8] {
+        let response = try await send(command)
+        guard let data = EdilkaminRegisters.dataBytes(fromReadResponse: response) else {
+            throw StoveBLEError.unexpectedResponse
+        }
+        return data
+    }
+
     // MARK: - Public stove operations
 
-    func readState() async throws -> (
-        isOn: Bool, ambient: Double, target: Double, powerLevel: Int, automaticMode: Bool
-    ) {
+    func readState() async throws -> StoveState {
         let onOff = try await readRegister(EdilkaminRegisters.readOnOffRegister)
         let ambient = try await readRegister(EdilkaminRegisters.readMainAmbientTemperature)
         let target = try await readRegister(EdilkaminRegisters.readTargetTemperature)
         let power = try await readRegister(EdilkaminRegisters.readPowerLevel)
         let automatic = try await readRegister(EdilkaminRegisters.readAutomaticMode)
+        let relax = try await readRegister(EdilkaminRegisters.readRelaxMode)
+        let operatingState = try await readRegister(EdilkaminRegisters.readOperatingState)
+        let alarm = try await readRegister(EdilkaminRegisters.readAlarmCode)
+        let warnings = try await readDataBytes(EdilkaminRegisters.readWarningFlags)
+        let fanConfig = EdilkaminRegisters.FanConfiguration(
+            rawLowByte: UInt8((try await readRegister(EdilkaminRegisters.readFanConfiguration)) & 0xFF)
+        )
+        var fan2: Int?
+        var fan3: Int?
+        if fanConfig.hasFan2 || fanConfig.hasFan3 {
+            let fan23 = try await readRegister(EdilkaminRegisters.readFan23)
+            if fanConfig.hasFan2 { fan2 = Int(fan23 & 0x00FF) }
+            if fanConfig.hasFan3 { fan3 = Int(fan23 >> 8) }
+        }
         // Both temperatures are stored as tenths of a degree (confirmed: writing the
-        // target as 185 reads back as the stove's real 18.5 °C setpoint).
-        return (
-            onOff & 0x0001 != 0, Double(ambient) / 10, Double(target) / 10, Int(power & 0x00FF),
-            automatic != 0x0001
+        // target as 185 reads back as the stove's real 18.5 °C setpoint). Pellet reserve
+        // is bit 2 of the second warning data byte (community-documented, not personally
+        // hardware-verified — cross-check against the stove's own reserve indicator).
+        return StoveState(
+            isOn: onOff & 0x0001 != 0,
+            ambient: Double(ambient) / 10,
+            target: Double(target) / 10,
+            powerLevel: Int(power & 0x00FF),
+            automaticMode: automatic != 0x0001,
+            relaxMode: relax != 0,
+            fan1Speed: Int(power >> 8),
+            fan2Speed: fan2,
+            fan3Speed: fan3,
+            pelletReserve: warnings.count >= 2 && (warnings[1] >> 2) & 1 != 0,
+            operatingState: operatingState,
+            alarmCode: UInt8(alarm >> 8)
         )
     }
 
@@ -176,14 +208,69 @@ final class StoveBLEManager: NSObject {
     /// it isn't, the stove likely keeps managing power itself regardless of this write —
     /// switch the stove to manual mode on its own panel/display first.
     func setPowerLevel(_ level: Int) async throws {
+        try await requireManualMode()
+        let current = try await readRegister(EdilkaminRegisters.readPowerLevel)
+        try await send(EdilkaminRegisters.writePowerLevel(level, preservingFanByteOf: current))
+    }
+
+    func setFan1Speed(_ speed: Int) async throws {
+        try await requireManualMode()
+        let current = try await readRegister(EdilkaminRegisters.readPowerLevel)
+        try await send(EdilkaminRegisters.writeFan1Speed(speed, preservingPowerByteOf: current))
+    }
+
+    func setFan2Speed(_ speed: Int) async throws {
+        try await requireManualMode()
+        let current = try await readRegister(EdilkaminRegisters.readFan23)
+        try await send(EdilkaminRegisters.writeFan2Speed(speed, preservingFan3ByteOf: current))
+    }
+
+    func setFan3Speed(_ speed: Int) async throws {
+        try await requireManualMode()
+        let current = try await readRegister(EdilkaminRegisters.readFan23)
+        try await send(EdilkaminRegisters.writeFan3Speed(speed, preservingFan2ByteOf: current))
+    }
+
+    private func requireManualMode() async throws {
         let automatic = try await readRegister(EdilkaminRegisters.readAutomaticMode)
         guard automatic == 0x0001 else {
             throw StoveBLEError.writeFailed(
-                "le poêle est en mode automatique : passez-le en mode manuel sur son propre écran avant de régler la puissance."
+                "le poêle est en mode automatique : passez-le en mode manuel sur son propre écran avant de régler la puissance ou les ventilateurs."
             )
         }
-        let current = try await readRegister(EdilkaminRegisters.readPowerLevel)
-        try await send(EdilkaminRegisters.writePowerLevel(level, preservingFanByteOf: current))
+        let relax = try await readRegister(EdilkaminRegisters.readRelaxMode)
+        guard relax == 0 else {
+            throw StoveBLEError.writeFailed(
+                "le mode Relax est actif : désactivez-le avant de régler la puissance ou les ventilateurs."
+            )
+        }
+    }
+
+    /// Switches the stove between automatic and manual power management. The
+    /// "automatic" direction is a best-effort guess — see `EdilkaminRegisters.writeAutomaticMode`.
+    func setAutomaticMode(on: Bool) async throws {
+        try await send(EdilkaminRegisters.writeAutomaticMode(on: on))
+    }
+
+    /// "Relax" (quiet/night) mode: lowers fan noise. Blocks manual power/fan writes
+    /// while active (see `requireManualMode`).
+    func setRelaxMode(on: Bool) async throws {
+        try await send(EdilkaminRegisters.writeRelaxMode(on: on))
+    }
+
+    /// Acknowledges the current alarm, following the documented preconditions: the stove
+    /// must actually be reporting an alarm (operating state 7), and must be off — it
+    /// otherwise rejects the reset while the power bit is set.
+    func acknowledgeAlarm() async throws {
+        let operatingState = try await readRegister(EdilkaminRegisters.readOperatingState)
+        guard operatingState == 7 else {
+            throw StoveBLEError.writeFailed("aucune alarme active à acquitter.")
+        }
+        let current = try await readRegister(EdilkaminRegisters.readOnOffRegister)
+        guard current & 0x0001 == 0 else {
+            throw StoveBLEError.writeFailed("éteignez le poêle avant d'acquitter l'alarme.")
+        }
+        try await send(EdilkaminRegisters.writeAlarmReset(preservingOtherBitsAs: current))
     }
 }
 

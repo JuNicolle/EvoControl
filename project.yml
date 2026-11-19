@@ -19,3 +19,24 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_CFBundleDisplayName: Poêle
         INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: "Nécessaire pour se connecter au poêle en Bluetooth."
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  EvoControlScreenshots:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - ScreenshotTests
+    settings:
+      base:
+        SWIFT_VERSION: "6.0"
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: EvoControl
+schemes:
+  EvoControl:
+    build:
+      targets:
+        EvoControl: all
+        EvoControlScreenshots: [test]
+    test:
+      targets:
+        - EvoControlScreenshots
